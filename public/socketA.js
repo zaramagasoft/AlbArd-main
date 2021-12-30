@@ -23,10 +23,16 @@ function mensajeToConsola(data) {
 }
 
 //SystemInformation cliente
+
 socket.on("dataHard", function (data) {
   //    console.log('HW->'+data)
 
   mensajeHard(data);
+});
+socket.on("temp", function (data) {
+  //    console.log('HW->'+data)
+  document.getElementById("temp").innerHTML = data;
+  
 });
 function mensajeHard(data) {
   document.getElementById("hardInf").innerHTML = data;

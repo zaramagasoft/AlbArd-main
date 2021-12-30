@@ -4,11 +4,12 @@ const xpress = require("express");
 
 const app = xpress();
 const path = require("path");
+const { emit } = require("process");
 const SocketIO = require("socket.io");
 const si = require("systeminformation");
 //server
 
-const server = app.listen(3000, "192.168.1.143", () => {
+const server = app.listen(3000, "10.0.2.15", () => {
   console.log("server on en puerto 3000");
 });
 const io = SocketIO(server);
@@ -83,6 +84,15 @@ var dataHardObj = []
 
 function dataHard() {
 
+  //temperatura procesador
+  si.cpuTemperature(function(data){
+
+    console.log(typeof(data.main));
+    //console.log("tempCPU",data.main
+    io.emit("temp",(data.main).toFixed(0))
+
+  })
+
   si.mem(function (data) {
     //console.log(data.total);
     //   console.log(data.used)
@@ -95,6 +105,7 @@ function dataHard() {
   });
 
   si.currentLoad(function (data) {
+    
     let CPU = "CPU:" + data.currentLoad.toFixed(2) + "%";
     dataHardObj.push(CPU);
     // console.log("Cpu:"+CPU.toFixed(2))
