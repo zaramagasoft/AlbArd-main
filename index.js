@@ -10,7 +10,7 @@ const si = require("systeminformation");
 const fs = require("fs");
 //server
 
-const server = app.listen(3000, "192.168.1.212", () => {
+const server = app.listen(3000, "192.168.1.143", () => {
   console.log("server on en puerto 3000");
 });
 const io = SocketIO(server);
