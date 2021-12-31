@@ -9,7 +9,7 @@ const SocketIO = require("socket.io");
 const si = require("systeminformation");
 //server
 
-const server = app.listen(3000, "10.0.2.15", () => {
+const server = app.listen(3000, "192.168.1.143", () => {
   console.log("server on en puerto 3000");
 });
 const io = SocketIO(server);
@@ -87,9 +87,14 @@ function dataHard() {
   //temperatura procesador
   si.cpuTemperature(function(data){
 
-    console.log(typeof(data.main));
+    if (data.main===null) {
+      
+    } else {
+      io.emit("temp",(data.main).toFixed(0))
+    }
+   // console.log(typeof(data.main));
     //console.log("tempCPU",data.main
-    io.emit("temp",(data.main).toFixed(0))
+   // io.emit("temp",(data.main).toFixed(0))
 
   })
 
