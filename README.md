@@ -1,2 +1,2 @@
 # AlbArd-main
-rama ubuntu
+ramaw10

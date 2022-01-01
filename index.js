@@ -19,11 +19,7 @@ const io = SocketIO(server);
 
 io.on("connection", (socket) => {
   console.log("cliente connection");
-  //  if (mensajeDifundir === "Print Done") {
-  //    socket.broadcast.emit("mensaje","polla");
-  //   console.log("que se envia tema", mensajeDifundir);
-  // mensajeDifundir = null
-  // }
+  //todo leer menajes file y enviar a nuevo clizz
 });
 //static
 
@@ -34,7 +30,18 @@ app.get("/", (req, res) => {
   res.render("index.html");
   //res.send("servidor escuchando ");
 });
-//conexion octopi webhook
+//conexion octopi webhook todo añadir hora dia y numero de linea al log
+function fechalog() {
+  const options = {
+    //  weekday: "short",
+    year: "numeric",
+    month: "2-digit",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+  return new Date().toLocaleDateString("es-ES", options);
+}
 let mensajeDifundir = {
   mensaje: [],
 };
@@ -60,7 +67,9 @@ app.post("/", (req, res) => {
       console.log(parsedJson.message);
       res.send("ok");
       // mensajeDifundir = parsedJson.topic;
-      mensajeDifundir.mensaje.push(parsedJson.topic + " " + parsedJson.message); //añado a mensajeDifundir el mensaje
+      mensajeDifundir.mensaje.push(
+        fechalog() + "->" + parsedJson.topic + " " + parsedJson.message
+      ); //añado a mensajeDifundir el mensaje
       //guardar mensaje difundir como json
       fs.writeFileSync(
         "./mensajesDifundir.json",
@@ -98,13 +107,10 @@ function dataHard() {
   si.cpuTemperature(function (data) {
     //console.log(typeof data.main);
     //console.log("tempCPU",data.main
-    if (data.main===null) {
-      
+    if (data.main === null) {
     } else {
-      io.emit("temp", (data.main).toFixed(0));
-      
+      io.emit("temp", data.main.toFixed(0));
     }
-    
   });
 
   si.mem(function (data) {
