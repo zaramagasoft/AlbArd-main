@@ -20,6 +20,13 @@ const io = SocketIO(server);
 io.on("connection", (socket) => {
   console.log("cliente connection");
   //todo leer menajes file y enviar a nuevo clizz
+  
+  // let logmensajes = new mensajeDifundir
+  let logmensajes = fs.readFileSync("./mensajesDifundir.json", "utf-8");
+  logmensajes = JSON.parse(logmensajes);
+  io.emit("connection", logmensajes);
+
+  //console.log(logmensajes)
 });
 //static
 
@@ -45,6 +52,8 @@ function fechalog() {
 let mensajeDifundir = {
   mensaje: [],
 };
+let logmensajestemp = fs.readFileSync("./mensajesDifundir.json", "utf-8");
+  mensajeDifundir = JSON.parse(logmensajestemp);
 
 app.post("/", (req, res) => {
   let body = "";
@@ -77,7 +86,7 @@ app.post("/", (req, res) => {
       );
       console.log("archivo mensaje difundir guardado");
 
-      enviarMensaje(parsedJson.topic + " " + parsedJson.message);
+      enviarMensaje(fechalog() + "->" +parsedJson.topic + " " + parsedJson.message);
 
       //req.connection.destroy(
       //  req.shouldKeepAlive = false

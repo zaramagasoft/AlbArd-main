@@ -7,6 +7,27 @@ socket.on("connect", function () {
   mensajeToConsola(data);
 });
 
+//al conectar con el server mostar el log en consola
+
+socket.on("connection", function (data) {
+  console.log("connection detectado en socketA", data);
+  datalog(data);
+});
+function datalog(data) {
+  // for (let index = data.mensaje.length; index <= data.mensaje.length; index--) {
+  // let element = data.mensaje[index];
+  // console.log(element);
+  data.mensaje.forEach(element => {
+    mensajeToConsola(element)
+    
+  });
+
+  // }
+
+  // mensajeToConsola(data.mensaje[i]);
+}
+
+//gestionar mensajes de octopi
 socket.on("mensaje", function (data) {
   console.log("mensaje recibio" + data);
   mensajeToConsola("Octopi: " + data);
