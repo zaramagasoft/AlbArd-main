@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon --wacth index.js"
   },
@@ -30,5 +29,5 @@
     "url": "https://github.com/zaramagasoft/AlbArd-main/issues"
   },
   "homepage": "https://github.com/zaramagasoft/AlbArd-main#readme",
-  "description": ""
+  "description": "ramaw10"
 }
